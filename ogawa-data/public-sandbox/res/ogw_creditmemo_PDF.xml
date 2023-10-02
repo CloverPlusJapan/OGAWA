@@ -1,0 +1,203 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdfset>
+    <pdf lang="ja_JP" xml:lang="ja_JP">
+        <head>
+            <link name="russianfont" type="font" subtype="opentype"
+                  src="NetSuiteFonts/verdana.ttf" src-bold="NetSuiteFonts/verdanad.ttf"
+                  src-italic="NetSuiteFonts/verdanai.ttf" src-bolditalic="NetSuiteFonts/verdanabi.ttf"
+                  bytes="2"/>
+            <style>
+
+
+                .dashed {
+                width: 100%;
+                padding: 2px;
+                border-bottom: 1px dashed #333;
+                }
+
+                .myTable tr{
+               margin-top: 6px;
+                }
+
+                .myTable td{
+                margin-left: 10px
+                }
+
+                .myClass th{
+                border: 0.5px solid black;
+                align:center;
+                }
+
+                .myClass td{
+                border: 0.5px solid black;
+                }
+
+
+            </style>
+        </head>
+        <body style="font-family: heiseimin, NotoSansCJKjp, sans-serif;" font-size="10">
+
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                        <tr>
+                        <td style="margin-top: 50px; ">
+                            <img src="http://3701295-sb1.shop.netsuite.com/core/media/media.nl?id=29&amp;c=3701295_SB1&amp;h=rCAYFVdnz2nU0Dpjl-MJzYIX8pjIXXZAM3KchsTasPWTSQhs"/>
+                        </td>
+                        </tr>
+                    </table>
+                    </td>
+
+                    <td style="margin-left: 180px;">
+                        <table>
+                            <tr>
+                                <td style="font-size: 10pt;">発行事業者：<br/>Ogawa Flavors &amp;  Fragrances (Singapore)Pte. Ltd.</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 10pt;">住所：<br/>51 Science Park Road <br/>Science Park II, #04-24, The Aries,Singapore 117586</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 10pt;"> 登録番号：T5700150113971</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div class="dashed"></div>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="margin-top: 10px; margin-left: 170px; font-size: 18pt;">
+                        <b>クレジットメモ</b>
+                    </td>
+                    <td style="margin-top: 10px; ">入金番号&nbsp;&nbsp;&nbsp;&nbsp; ${record.tranid}
+                        <br/>
+                        日付&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${record.date}
+
+                    </td>
+                </tr>
+            </table>
+            <div class="dashed"></div>
+            <table class="myTable" style="width: 100%;">
+                <tr>
+                    <td style="margin-top: 20px;  border-bottom: 1px dashed #333">請求先
+                        <br/>
+                        <br/>
+                        ${record.billaddress}
+                    </td>
+                    <td style="height: 130px; border-right: 1px dashed #333;margin-left: 5px;"></td>
+                    <td style="margin-top: 20px; margin-left: 80px;">Shipping Mark:
+                        <br/> <br/>
+                        ${record.ShippMark}
+                    </td>
+                </tr>
+                <tr style="margin-top: 2px; ">
+                    <td>Consignee:
+                        <br/> <br/>
+                        ${record.cons}
+                    </td>
+                    <td style="height: 100px; border-right: 1px dashed #333;margin-left: 5px;"></td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="dashed"></div>
+
+            <table class="myTable" style="width: 100%;">
+<!--                <tr>-->
+<!--                    <td>Shipped Per:  &nbsp;&nbsp;&nbsp; ${record.ShippedPer}</td>-->
+<!--                    <td style="margin-left: 80px;">On or about:  &nbsp;&nbsp;&nbsp; ${record.about}</td>-->
+<!--                </tr>-->
+
+<!--                <tr>-->
+<!--                    <td>From:  &nbsp;&nbsp;&nbsp; ${record.From}</td>-->
+<!--                    <td style="margin-left: 80px;">Via:  &nbsp;&nbsp;&nbsp; ${record.Via}</td>-->
+<!--                </tr>-->
+
+<!--                <tr>-->
+<!--                    <td>To:  &nbsp;&nbsp;&nbsp; ${record.To}</td>-->
+<!--                    <td style="margin-left: 80px;">L/C No:  &nbsp;&nbsp;&nbsp; ${record.LCNo}</td>-->
+<!--                </tr>-->
+
+<!--                <tr>-->
+<!--                    <td>Payment:  &nbsp;&nbsp;&nbsp; ${record.Payment}</td>-->
+<!--                    <td style="margin-left: 80px;">Reference:  &nbsp;&nbsp;&nbsp; ${record.Reference}</td>-->
+<!--                </tr>-->
+                <tr>
+                    <td>Currency:  &nbsp;&nbsp;&nbsp; ${record.currency} </td>
+                    <td style="margin-left: 80px;"></td>
+                </tr>
+            </table>
+            <div class="dashed"></div>
+
+            <table  class="myClass" style="margin-top: 10px;width: 100%;  border-collapse: collapse ">
+                <tr>
+                    <th  colspan="1"   style="background-color: #d3d3d3;">Nu...</th>
+                    <th  colspan="10"  style="background-color: #d3d3d3;">説明</th>
+                    <th  colspan="8" style="background-color: #d3d3d3;">品番</th>
+                    <th  colspan="8" style="background-color: #d3d3d3;">Packing Details</th>
+                    <th  colspan="4" style="background-color: #d3d3d3;">数量</th>
+                    <th  colspan="4" style="background-color: #d3d3d3;">単位</th>
+                    <th  colspan="6" style="background-color: #d3d3d3;">単価</th>
+                    <th  colspan="6" style="background-color: #d3d3d3;">金額</th>
+                </tr>
+                {@each sub as item,i}
+                <tr>
+                    <td colspan="1" >${item.num}</td>
+                    <td colspan="10" >${item.PACKING}</td>
+                    <td colspan="8" >${item.itemNum}</td>
+                    <td colspan="8" >${item.description}</td>
+                    <td colspan="4" align="right">${item.quantity}</td>
+                    <td colspan="4" >${item.unit}</td>
+                    <td colspan="6" align="right">${item.rate}</td>
+                    <td colspan="6"  align="right">${item.amount}</td>
+                </tr>
+                {@/each}
+                <tr >
+                    <td colspan="35" style="border: none;"> &nbsp;</td>
+                    <td  colspan="6" style="background-color: #d3d3d3;">小計</td>
+                    <td colspan="6" align="right" >${record.subtotal}</td>
+                </tr>
+        </table>
+
+
+            <table  class="myClass" style="height:80px; margin-top: 5px; ">
+                <tr>
+                     <td rowspan="3"   width="40px"  style="background-color: #d3d3d3; margin-left: 365px; line-height: 55px;" >消費税</td>
+                     <td width="80px">税率</td>
+                     <td width="78px">税率別小計</td>
+                     <td width="87px"></td>
+                </tr>
+
+                <tr >
+                    <td>8%対象金額</td>
+                    <td align="right">${tax.eightAmt}</td>
+                    <td align="right">${tax.eight}</td>
+                </tr>
+
+                <tr >
+                    <td>10%対象金額</td>
+                    <td align="right">${tax.tenAmt}</td>
+                    <td align="right" >${tax.ten}</td>
+                </tr>
+            </table>
+
+            <table  class="myClass" style="width: 100%; ">
+                <tr >
+                    <td style="width:79px; margin-left: 488px;  background-color: #d3d3d3;">合計</td>
+                    <td align="right" style="width:87px;  ">${record.total}</td>
+                </tr>
+            </table>
+
+            <table style=" width:100%; position:relative; margin-top:100px;" >
+                <tr>
+                    <td style="align:right" >Ogawa Flavors &amp;  Fragrances (Singapore) Pte. Ltd.</td>
+                </tr>
+            </table>
+
+
+
+
+        </body>
+    </pdf>
+
+</pdfset>
