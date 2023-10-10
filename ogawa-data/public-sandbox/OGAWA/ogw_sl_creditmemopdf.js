@@ -49,6 +49,10 @@ define(['/SuiteScripts/common/juicerTemplateEngine.js', 'N/file', 'N/record', 'N
             recordJson.subtotal = toThousands(Number(memoRecord.getValue("subtotal")));
             recordJson.total = toThousands(Number(memoRecord.getValue("total")));
             recordJson.message = memoRecord.getValue("message");
+            // 2023.10.10 F.Saito add start ***
+            // 日付を取得
+            recordJson.trandate = memoRecord.getValue("trandate") ? format.format({type: format.Type.DATE, value: memoRecord.getValue("trandate")}):"";
+            // 2023.10.10 F.Saito add end   ***
 
             let subArr = dataJson.sub = dataJson.sub || [];
 
@@ -66,6 +70,10 @@ define(['/SuiteScripts/common/juicerTemplateEngine.js', 'N/file', 'N/record', 'N
                 let amount = memoRecord.getSublistValue({sublistId: "item", fieldId: "amount", line: i})
                 let res = {};
                 res.num = i + 1;
+                // 2023.10.05 F.Saito add start ***
+                // 納品日(ETA)を追加
+                res.custcol_eta = memoRecord.getSublistValue({sublistId: "item", fieldId: "custcol_eta", line: i}) ? format.format({type: format.Type.DATE, value: memoRecord.getSublistValue({sublistId: "item", fieldId: "custcol_eta", line: i})}):"";
+                // 2023.10.05 F.Saito add end   ***
                 res.quantity = memoRecord.getSublistValue({sublistId: "item", fieldId: "quantity", line: i})
                 res.PACKING = memoRecord.getSublistValue({sublistId: "item", fieldId: "description", line: i})
                 res.description = memoRecord.getSublistValue({sublistId: "item", fieldId: "custcol1", line: i})

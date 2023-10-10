@@ -132,7 +132,8 @@
             <table  class="myClass" style="margin-top: 10px;width: 100%;  border-collapse: collapse ">
                 <tr>
                     <th  colspan="1"   style="background-color: #d3d3d3;">Nu...</th>
-                    <th  colspan="10"  style="background-color: #d3d3d3;">説明</th>
+                    <th colspan="4"  style="background-color: #d3d3d3;">取引日</th>
+                    <th  colspan="10"  style="background-color: #d3d3d3;">品名</th>
                     <th  colspan="8" style="background-color: #d3d3d3;">品番</th>
                     <th  colspan="8" style="background-color: #d3d3d3;">Packing Details</th>
                     <th  colspan="4" style="background-color: #d3d3d3;">数量</th>
@@ -143,6 +144,7 @@
                 {@each sub as item,i}
                 <tr>
                     <td colspan="1" >${item.num}</td>
+                    <td colspan="4">${record.trandate}</td>
                     <td colspan="10" >${item.PACKING}</td>
                     <td colspan="8" >${item.itemNum}</td>
                     <td colspan="8" >${item.description}</td>
@@ -153,7 +155,7 @@
                 </tr>
                 {@/each}
                 <tr >
-                    <td colspan="35" style="border: none;"> &nbsp;</td>
+                    <td colspan="39" style="border: none;"> &nbsp;</td>
                     <td  colspan="6" style="background-color: #d3d3d3;">小計</td>
                     <td colspan="6" align="right" >${record.subtotal}</td>
                 </tr>
@@ -193,10 +195,6 @@
                     <td style="align:right" >Ogawa Flavors &amp;  Fragrances (Singapore) Pte. Ltd.</td>
                 </tr>
             </table>
-
-
-
-
         </body>
     </pdf>
 
