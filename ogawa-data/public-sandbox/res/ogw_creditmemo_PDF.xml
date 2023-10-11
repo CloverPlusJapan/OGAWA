@@ -156,7 +156,7 @@
                 {@/each}
                 <tr >
                     <td colspan="39" style="border: none;"> &nbsp;</td>
-                    <td  colspan="6" style="background-color: #d3d3d3;">小計</td>
+                    <td  colspan="6" style="background-color: #d3d3d3;" align="center">小計</td>
                     <td colspan="6" align="right" >${record.subtotal}</td>
                 </tr>
         </table>
@@ -164,10 +164,10 @@
 
             <table  class="myClass" style="height:80px; margin-top: 5px; ">
                 <tr>
-                     <td rowspan="3"   width="40px"  style="background-color: #d3d3d3; margin-left: 365px; line-height: 55px;" >消費税</td>
-                     <td width="80px">税率</td>
-                     <td width="78px">税率別小計</td>
-                     <td width="87px"></td>
+                     <td rowspan="3"   width="40px"  style="background-color: #d3d3d3; margin-left: 365px; line-height: 55px;">消費税</td>
+                     <td width="80px" style="background-color:#d3d3d3;" align="center">税率</td>
+                     <td width="78px" style="background-color:#d3d3d3;" align="center">税率別小計</td>
+                     <td width="87px" style="background-color:#d3d3d3;" align="center">税額</td>
                 </tr>
 
                 <tr >
@@ -185,7 +185,7 @@
 
             <table  class="myClass" style="width: 100%; ">
                 <tr >
-                    <td style="width:79px; margin-left: 488px;  background-color: #d3d3d3;">合計</td>
+                    <td style="width:79px; margin-left: 488px;  background-color: #d3d3d3;" align="center">合計</td>
                     <td align="right" style="width:87px;  ">${record.total}</td>
                 </tr>
             </table>
