@@ -103,25 +103,6 @@
             <div class="dashed"></div>
 
             <table class="myTable" style="width: 100%;">
-<!--                <tr>-->
-<!--                    <td>Shipped Per:  &nbsp;&nbsp;&nbsp; ${record.ShippedPer}</td>-->
-<!--                    <td style="margin-left: 80px;">On or about:  &nbsp;&nbsp;&nbsp; ${record.about}</td>-->
-<!--                </tr>-->
-
-<!--                <tr>-->
-<!--                    <td>From:  &nbsp;&nbsp;&nbsp; ${record.From}</td>-->
-<!--                    <td style="margin-left: 80px;">Via:  &nbsp;&nbsp;&nbsp; ${record.Via}</td>-->
-<!--                </tr>-->
-
-<!--                <tr>-->
-<!--                    <td>To:  &nbsp;&nbsp;&nbsp; ${record.To}</td>-->
-<!--                    <td style="margin-left: 80px;">L/C No:  &nbsp;&nbsp;&nbsp; ${record.LCNo}</td>-->
-<!--                </tr>-->
-
-<!--                <tr>-->
-<!--                    <td>Payment:  &nbsp;&nbsp;&nbsp; ${record.Payment}</td>-->
-<!--                    <td style="margin-left: 80px;">Reference:  &nbsp;&nbsp;&nbsp; ${record.Reference}</td>-->
-<!--                </tr>-->
                 <tr>
                     <td>Currency:  &nbsp;&nbsp;&nbsp; ${record.currency} </td>
                     <td style="margin-left: 80px;"></td>
