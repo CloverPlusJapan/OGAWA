@@ -1,16 +1,16 @@
 /**
  * 機能: 発注書・注文書一括ダウンロード
  * Author: CPC_劉相坤
- * Date:2023 /10/13
+ * Date:2023/10/13
  * 
  * @NApiVersion 2.1
  * @NScriptType Suitelet
  * @NModuleScope SameAccount
  */
 
-define([ 'N/ui/serverWidget' , 'N/search' , 'N/runtime' , 'N/task' , 'N/file' , 'N/format' , 'N/record' , 'N/url' , 'N/redirect' , "../common/common_ogw.js" ] , 
+define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/format', 'N/record', 'N/url', 'N/redirect', "../common/common_ogw.js"], 
        
-  function( serverWidget , search , runtime , task , file , format , record , url , redirect , common ) {
+  function( serverWidget, search, runtime, task, file, format, record, url, redirect, common ) {
     
     /**
      * Definition of the Suitelet script trigger point.
@@ -20,32 +20,32 @@ define([ 'N/ui/serverWidget' , 'N/search' , 'N/runtime' , 'N/task' , 'N/file' , 
      * @param {ServerResponse} context.response - Encapsulation of the Suitelet response
      * @Since 2015.2
      */
-    function onRequest ( context ) {
+    function onRequest (context) {
 
         // 画面入力値取得
         let output = context.request.parameters.output;
-        let date_from = context.request.parameters.date_from;
+        let dateFrom = context.request.parameters.date_from;
         let date_to = context.request.parameters.date_to;
         let vendor = context.request.parameters.vendor;
         let customer = context.request.parameters.customer;
         let flag = context.request.parameters.flag;
     
         // POSTの場合
-        if ( flag ) {
+        if (flag) {
             // 現在のScriptパラメータ値の取得
             let currentScript = runtime.getCurrentScript();
-            let script_po = currentScript.getParameter({ name : "custscript_po" });
-            let script_so = currentScript.getParameter({ name : "custscript_so" });
-            let po_folder = currentScript.getParameter({ name : "custscript_po_folder" });
-            let so_folder = currentScript.getParameter({ name : "custscript_so_folder" });
-            let typeFlag = currentScript.getParameter({ name : "custscript_type_flag" });
-            let poName = currentScript.getParameter({ name : "custscript_po_name" });
-            let soName = currentScript.getParameter({ name : "custscript_so_name" });
+            let script_po = currentScript.getParameter({name:"custscript_po"});
+            let script_so = currentScript.getParameter({name:"custscript_so"});
+            let po_folder = currentScript.getParameter({name:"custscript_po_folder"});
+            let so_folder = currentScript.getParameter({name:"custscript_so_folder"});
+            let typeFlag = currentScript.getParameter({name:"custscript_type_flag"});
+            let poName = currentScript.getParameter({name:"custscript_po_name"});
+            let soName = currentScript.getParameter({name:"custscript_so_name"});
             
             // 親フォルダ取得
             let oyafolderId = output == typeFlag ? po_folder : so_folder;
             // フォルダ名の作成
-            let folderName = output == typeFlag ? poName + common.getTokyoDate( format , true ) : soName + common.getTokyoDate( format , true );
+            let folderName = output == typeFlag ? poName + common.getTokyoDate( format, true ) : soName + common.getTokyoDate( format, true );
             // フォルダ作成
             let folder = record.create({
                 type : record.Type.FOLDER
@@ -136,8 +136,8 @@ define([ 'N/ui/serverWidget' , 'N/search' , 'N/runtime' , 'N/task' , 'N/file' , 
         }
         
         // FORM作成
-        const form = createForm( serverWidget );
-        context.response.writePage( form );
+        const form = createForm(serverWidget);
+        context.response.writePage(form);
 
     }
             
@@ -148,13 +148,14 @@ define([ 'N/ui/serverWidget' , 'N/search' , 'N/runtime' , 'N/task' , 'N/file' , 
 });
 /**
  * 機能: 発注書・注文書一括ダウンロード　画面作成
+ * @param {Object} serverWidget
  */
-function createForm( serverWidget ) {
+function createForm(serverWidget) {
     // フォーム名　セット
     let form = serverWidget.createForm({
         title : '発注書・注文書一括ダウンロード',
     });
-    // クライアント・スクリプト　せｔｔ　
+    // クライアント・スクリプト　セット
     form.clientScriptModulePath = './ogw_cs_download_view.js';
     // 項目セット
     form.addButton({
