@@ -34,16 +34,16 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
         if (flag) {
             // 現在のScriptパラメータ値の取得
             let currentScript = runtime.getCurrentScript();
-            let script_po = currentScript.getParameter({name:"custscript_po"});
-            let script_so = currentScript.getParameter({name:"custscript_so"});
-            let po_folder = currentScript.getParameter({name:"custscript_po_folder"});
-            let so_folder = currentScript.getParameter({name:"custscript_so_folder"});
+            let poScript = currentScript.getParameter({name:"custscript_po"});
+            let soScript = currentScript.getParameter({name:"custscript_so"});
+            let poFolder = currentScript.getParameter({name:"custscript_po_folder"});
+            let soFolder = currentScript.getParameter({name:"custscript_so_folder"});
             let typeFlag = currentScript.getParameter({name:"custscript_type_flag"});
             let poName = currentScript.getParameter({name:"custscript_po_name"});
             let soName = currentScript.getParameter({name:"custscript_so_name"});
             
             // 親フォルダ取得
-            let oyafolderId = output == typeFlag ? po_folder : so_folder;
+            let oyafolderId = output == typeFlag ? poFolder : soFolder;
             // フォルダ名の作成
             let folderName = output == typeFlag ? poName + common.getTokyoDate( format, true ) : soName + common.getTokyoDate( format, true );
             // フォルダ作成
@@ -91,7 +91,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
                         sortcol : "dcreated",
                         sortdir : "DESC",
                         date : "TODAY",
-                        scripttype : script_po,
+                        scripttype : poScript,
                 };
                 
                 // URLジャンプ
@@ -125,7 +125,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
                         sortcol : "dcreated",
                         sortdir : "DESC",
                         date : "TODAY",
-                        scripttype : script_so,
+                        scripttype : soScript,
                 };
                 
                 // URLジャンプ
