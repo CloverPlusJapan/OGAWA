@@ -25,7 +25,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
         // 画面入力値取得
         let output = context.request.parameters.output;
         let dateFrom = context.request.parameters.date_from;
-        let date_to = context.request.parameters.date_to;
+        let dateTo = context.request.parameters.date_to;
         let vendor = context.request.parameters.vendor;
         let customer = context.request.parameters.customer;
         let flag = context.request.parameters.flag;
@@ -77,8 +77,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
                 // スクリプトパラメータ
                 mrScript.params = {
                         'custscript_down_pdf_output' : output,
-                        'custscript_down_pdf_date_from' : date_from,
-                        'custscript_down_pdf_date_to' : date_to,
+                        'custscript_down_pdf_date_from' : dateFrom,
+                        'custscript_down_pdf_date_to' : dateTo,
                         'custscript_down_pdf_vendor' : vendor,
                         'custscript_down_pdf_customer' : customer,
                         'custscript_down_pdf_folderId' : folderId,
@@ -112,8 +112,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/runtime', 'N/task', 'N/file', 'N/for
                 // スクリプトパラメータ
                 mrScript.params = {
                         'custscript_ogw_down_load_customer' : customer,
-                        'custscript_ogw_down_load_start' : date_from,
-                        'custscript_ogw_down_load_enddate' : date_to,
+                        'custscript_ogw_down_load_start' : dateFrom,
+                        'custscript_ogw_down_load_enddate' : dateTo,
                         'custscript_ogw_down_load_folderid' : folderId,
                 };
                 
