@@ -1,11 +1,16 @@
+
 /**
+ * ‹@”\: Á”ïÅ‚ÉŠÖ‚·‚éƒŒƒ|[ƒgo—Í
+ * Author: ‘v‹à—ˆ
+ *  Date : 2023/09/12
+ *
  * @NApiVersion 2.1
  * @NScriptType ClientScript
  * @NModuleScope SameAccount
  */
-define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
+define(['N/currentRecord' , 'N/search' , 'N/format' , 'N/ui/dialog', 'N/format','N/runtime'],
 
-    function (currentRecord, search, format, dialog) {
+    function (currentRecord , search,  format,  dialog,format,runtime) {
 
         /**
          * Function to be executed after page is initialized.
@@ -37,24 +42,21 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
 
         function reportExcel() {
             debugger
-                // jQuery("input[id='reportExcel']").attr("disabled","true");//æŒ‰é’®ç¦ç”¨
-                // let Buttonkey = window.localStorage.getItem("Buttonkey"); // ä»æµè§ˆå™¨localStorageè·å–å‚¨å­˜çš„jsonä¿¡æ¯
-                //  if (!isEmpty(Buttonkey)){
-                //  alert("äºŒé‡æŠ¼ä¸‹ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†!")
-                //      return;
-                //  }
-                let currentRec = currentRecord.get();
-                let vendor = currentRec.getValue('custpage_vendor');
-                let dataFrom = paramsDate(currentRec.getValue('custpage_date_from'));
-                let dataTo = paramsDate(currentRec.getValue('custpage_date_to'));
-                let options = {vendor: vendor, startDate: dataFrom, endDate: dataTo}
-                let  dataJson =  searchBillOGJTax(options);
-                loadExcelMessage(dataJson);
-                // window.localStorage.setItem("Buttonkey", false);
+            var currentRec = currentRecord.get();
+            var vendor = currentRec.getValue('custpage_vendor');
+            var dataFrom = isEmpty(paramsDate(currentRec.getValue('custpage_date_from')))? "": formatDate(currentRec.getValue('custpage_date_from'));
+            var dataTo = isEmpty(paramsDate(currentRec.getValue('custpage_date_to'))) ? "" :formatDate(currentRec.getValue('custpage_date_to'));
+            var options = {vendor: vendor, startDate: dataFrom, endDate: dataTo}
+            var  dataJson =  searchBillOGJTax(options);
+            if (isEmpty(dataJson)){
+                alert(" ŠY“–ƒf[ƒ^‚ ‚è‚Ü‚¹‚ñB")
+                return;
+            }
+            loadExcelMessage(dataJson);
         }
 
         /**
-         * è§£ææ—¥æœŸå¯¹è±¡
+         * ‰ğÍ“úƒIƒuƒWƒFƒNƒg
          * @param boolean
          * @param date
          * @returns {string|*}
@@ -70,7 +72,7 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
         }
 
         /**
-         * ä¸‹è½½ excel
+         * excel‚Ìƒ_ƒEƒ“ƒ[ƒh
          */
         function  loadExcelMessage(dataJson){
             var xmlString = '	<?xml version="1.0"?>	 ';
@@ -101,7 +103,7 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             xmlString += '	  <Style ss:ID="Default" ss:Name="Normal">	 ';
             xmlString += '	   <Alignment ss:Vertical="Center"/>	 ';
             xmlString += '	   <Borders/>	 ';
-            xmlString += '	   <Font ss:FontName="ç­‰çº¿" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>	 ';
+            xmlString += '	   <Font ss:FontName="‘v‘Ì" x:CharSet="134" ss:Size="11" ss:Color="#000000"/>	 ';
             xmlString += '	   <Interior/>	 ';
             xmlString += '	   <NumberFormat/>	 ';
             xmlString += '	   <Protection/>	 ';
@@ -111,7 +113,7 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             xmlString += '	  </Style>	 ';
             xmlString += '	  <Style ss:ID="s67">	 ';
             xmlString += '	   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>	 ';
-            xmlString += '	   <Font ss:FontName="å®‹ä½“" x:CharSet="134" ss:Size="12.8"/>	 ';
+            xmlString += '	   <Font ss:FontName="‘v‘Ì" x:CharSet="134" ss:Size="12.8"/>	 ';
             xmlString += '	  </Style>	 ';
             xmlString += '	 </Styles>	 ';
             xmlString += '	 <Worksheet ss:Name="Sheet1">	 ';
@@ -119,13 +121,13 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             xmlString += '	   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="14.25">	 ';
             xmlString += '	   <Column ss:AutoFitWidth="0" ss:Width="105" ss:Span="6"/>	 ';
             xmlString += '	   <Row ss:Height="15">	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">ä»•å…¥å…ˆ</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s67"><Data ss:Type="String">å‹˜å®šç§‘ç›®</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">å–å¼•é€šè²¨</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">å–å¼•é«˜</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">ç¨ç‡</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">æ¶ˆè²»ç¨é¡</Data></Cell>	 ';
-            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">é©æ ¼è«‹æ±‚æ›¸ç•ªå·</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">d“üæ</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s67"><Data ss:Type="String">Š¨’è‰È–Ú</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">æˆø’Ê‰İ</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">æˆø‚</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">Å—¦</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">Á”ïÅŠz</Data></Cell>	 ';
+            xmlString += '	    <Cell ss:StyleID="s66"><Data ss:Type="String">“KŠi¿‹‘”Ô†</Data></Cell>	 ';
             xmlString += '	   </Row>	 ';
             for (const key in dataJson) {
                 xmlString += '	   <Row>	 ';
@@ -135,7 +137,7 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
                 xmlString += '	    <Cell><Data ss:Type="Number">'+dataJson[key].amount+'</Data></Cell>	 ';
                 xmlString += '	    <Cell><Data ss:Type="String">'+dataJson[key].taxItem+'</Data></Cell>	 ';
                 xmlString += '	    <Cell><Data ss:Type="Number">'+dataJson[key].taxAmt+'</Data></Cell>	 ';
-                xmlString += '	    <Cell><Data ss:Type="String"></Data></Cell>	 ';
+                xmlString += '	    <Cell><Data ss:Type="String">'+dataJson[key].invoice_number+'</Data></Cell>	 ';
                 xmlString += '	   </Row>	 ';
             }
             xmlString += '	  </Table>	 ';
@@ -159,15 +161,14 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             xmlString += '	 </Worksheet>	 ';
             xmlString += '	</Workbook>	 ';
             var uri = 'data:application/vnd.ms-excel;base64,';
-            var a = document.createElement("a");                                                                   // ä¸ºäº†ç»™xlsæ–‡ä»¶å‘½åï¼Œé‡æ–°åˆ›å»ºä¸€ä¸ªaå…ƒç´ 
-            a.href = uri + base64(xmlString);                                                                               // ç»™aå…ƒç´ è®¾ç½® hrefå±æ€§
-            a.download =`TAXREPORT_${new Date().Format("yyyyMMdd hhmmss")}.xls`;                          // ç»™aå…ƒç´ è®¾ç½®ä¸‹è½½åç§°
+            var a = document.createElement("a");
+            a.href = uri + base64(xmlString);
+            a.download =`TAXREPORT_${new Date().Format("yyyyMMdd hhmmss")}.xls`;
             a.click();
-
         }
 
         /**
-         * è¾“å‡ºbase64ç¼–ç 
+         *  base 64ƒGƒ“ƒR[ƒfƒBƒ“ƒO
          * @param s
          * @returns {string}
          */
@@ -175,18 +176,17 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             return window.btoa(unescape(encodeURIComponent(s)));
         }
 
-
         Date.prototype.Format = function(fmt) {
             this.setHours(this.getHours() +1);
             var o = {
                 "y+": this.getFullYear(),
-                "M+": this.getMonth() + 1, //æœˆä»½
-                "d+": this.getDate(), //æ—¥
-                "h+": this.getHours(), //å°æ—¶
-                "m+": this.getMinutes(), //åˆ†
-                "s+": this.getSeconds(), //ç§’
-                "q+": Math.floor((this.getMonth() + 3) / 3), //å­£åº¦
-                "S+": this.getMilliseconds() //æ¯«ç§’
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
             };
             for (var k in o) {
                 if (new RegExp("(" + k + ")").test(fmt)) {
@@ -215,18 +215,21 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             return fmt;
         };
 
+        /**
+         * ¿‹‘‚ÌŒŸõ
+         * @param options
+         * @returns {{}}
+         */
         function searchBillOGJTax(options) {
             var dataJson = {};
-            var billFilter = [["type", "anyof", "VendBill"], "AND", ["customform", "anyof", "248"], "AND", ["taxline", "is", "F"], "AND", ["mainline", "is", "F"]];
-
-                log.audit("options ", options);
-                if (options.vendor){
-                    billFilter.push('AND', ["vendor.internalid", "anyof", options.vendor]);
-                } else {
-                    billFilter.push("AND",[ ["vendor.entityid", "startswith", "31"], "OR", ["vendor.entityid", "is", "10195"]]);
-                }
-            for (let i = 0; i < 1; i++) {
-                if (options.startDate && options.endDate) {
+            var billFilter = [ ["type", "anyof", "VendBill"] , "AND" , ["customform","anyof" , "242"] , "AND" , ["taxline" , "is" , "F"] , "AND" , ["mainline" , "is" , "F"] ];
+            if (options.vendor){
+                billFilter.push('AND' , ["vendor.internalid" , "anyof" , options.vendor]);
+            } else {
+                billFilter.push("AND" , [ ["vendor.entityid" , "startswith" , "31"] , "OR" , ["vendor.entityid" , "is" , "10195"] ] );
+            }
+            for (var i = 0; i < 1; i++) {
+                if (options.startDate  &&  options.endDate) {
                     billFilter.push('AND', ["trandate", "within", options.startDate, options.endDate]);
                     break;
                 } else if (options.startDate) {
@@ -235,35 +238,36 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
                     billFilter.push('AND', ["trandate", "onorbefore", options.endDate]);
                 }
             }
-            log.audit("billFilter",billFilter );
-
             var vendorbillSearchObj = search.create({
                 type: "vendorbill",
                 filters: billFilter,
                 columns:
                     [
-                        search.createColumn({name: "account", label: "ç§‘ç›®"}),
-                        search.createColumn({name: "altname", join: "vendor", label: "åç§°"}),
-                        search.createColumn({name: "internalid", join: "vendor", label: "å†…éƒ¨ ID"}),
-                        search.createColumn({name: "currency", label: "è´§å¸"}),
-                        search.createColumn({name: "amount", label: "é‡‘é¢"}),
-                        search.createColumn({name: "taxamount", label: "é‡‘é¢ï¼ˆäº‹åŠ¡å¤„ç†ç¨æ€»è®¡ï¼‰"}),
-                        search.createColumn({name: "rate", join: "taxItem", label: "ç¨ç‡"})
+                        search.createColumn({name: "account"}),
+                        search.createColumn({name: "altname" ,  join: "vendor"}),
+                        search.createColumn({name: "internalid" ,  join: "vendor"}),
+                        search.createColumn({name: "currency"}),
+                        search.createColumn({name: "fxamount"}),
+                        search.createColumn({name: "formulanumeric", formula: "{fxamount}*({taxItem.rate}/100)"}),
+                        search.createColumn({name: "rate" , join: "taxItem"}),
+                        search.createColumn({name: "custentity_qualified_invoice_number" , join: "vendor"}),
                     ]
             });
-            let columns = vendorbillSearchObj.columns;
-            let  resultArr = getAllResults(vendorbillSearchObj);
+            var columns = vendorbillSearchObj.columns;
+            var  resultArr = getAllResults(vendorbillSearchObj);
             if (!isEmpty(resultArr)){
-                for (let i = 0; i < resultArr.length; i++) {
-                    let vendor = resultArr[i].getValue(columns[2]);
-                    let account = resultArr[i].getValue(columns[0]);
-                    let taxItem = resultArr[i].getValue(columns[6]);
-                    let  key  = vendor+"_"+account+"_"+taxItem;
-                    let bodyJson = dataJson[key] =  dataJson[key]||{};
+                for (var i = 0; i < resultArr.length; i++) {
+                    var vendor = resultArr[i].getValue(columns[2]);
+                    var account = resultArr[i].getValue(columns[0]);
+                    var taxItem = resultArr[i].getValue(columns[6]);
+                    var currency = resultArr[i].getValue(columns[3]);
+                    var  key  = vendor+"_"+account+"_"+taxItem+"_"+currency;
+                    var bodyJson = dataJson[key] =  dataJson[key]||{};
                     bodyJson.vendor = resultArr[i].getValue(columns[1]);
                     bodyJson.account = resultArr[i].getText(columns[0]);
                     bodyJson.taxItem = taxItem;
                     bodyJson.currency = resultArr[i].getText(columns[3]);
+                    bodyJson.invoice_number = resultArr[i].getValue(columns[7]);
                     bodyJson.amount =Number(bodyJson.amount||0)+ Math.abs(Number(resultArr[i].getValue(columns[4])));
                     bodyJson.taxAmt =Number(bodyJson.taxAmt||0)+ Math.abs(Number(resultArr[i].getValue(columns[5])));
                 }
@@ -271,16 +275,17 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
             return dataJson;
         }
 
+        /**
+         *ƒy[ƒWğŒ‚ğƒNƒŠƒA
+         */
         function clearPage(){
-            debugger
-            let currentRec = currentRecord.get();
-            currentRec.setValue({fieldId:"custpage_vendor",value:""});
-            currentRec.setValue({fieldId:"custpage_date_from",value:null});
-            currentRec.setValue({fieldId:"custpage_date_to",value:null});
+            var currentRec = currentRecord.get();
+            currentRec.setValue({fieldId:"custpage_vendor", value:""});
+            currentRec.setValue({fieldId:"custpage_date_from", value:null});
+            currentRec.setValue({fieldId:"custpage_date_to", value:null});
         }
 
         /**
-         * é€šç”¨æ–¹æ³•æ ¡éªŒ
          * @param mySearch
          * @returns {[]}
          */
@@ -299,8 +304,8 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
         }
 
         /**
-         * éç©ºåˆ¤æ–­
-         * @param obj å„ç§ç±»å‹
+         * ”ñ‹ó”»’è
+         * @param obj
          * @returns {boolean}
          */
         function isEmpty(obj) {
@@ -325,6 +330,25 @@ define(['N/currentRecord', 'N/search', 'N/format', 'N/ui/dialog'],
                 return false;
             }
             return true;
+        }
+
+        function formatDate(isDate) {
+            var userObj = runtime.getCurrentUser();
+            var userFormat = userObj.getPreference({
+                name: "DATEFORMAT"
+            });
+            userFormat = userFormat.replace(/YYYY/, isDate.getFullYear());
+            if (userFormat.indexOf("MM") < 0 && userFormat.indexOf("M") >= 0) {
+                userFormat = userFormat.replace(/M/, isDate.getMonth() + 1);
+            } else {
+                userFormat = userFormat.replace(/MM/, isDate.getMonth() + 1);
+            }
+            if (userFormat.indexOf("DD") < 0 && userFormat.indexOf("D") >= 0) {
+                userFormat = userFormat.replace(/D/, isDate.getDate());
+            } else {
+                userFormat = userFormat.replace(/DD/, isDate.getDate());
+            }
+            return userFormat;
         }
 
 

@@ -1,4 +1,8 @@
 /**
+ * ‹@”\: Á”ïÅ‚ÉŠÖ‚·‚éƒŒƒ|[ƒgo—Í
+ *  Author: ‘v‹à—ˆ
+ *  Date :2023/09/12
+ *
  * @NApiVersion 2.1
  * @NScriptType Suitelet
  */
@@ -15,33 +19,34 @@ define(['N/search', 'N/ui/serverWidget'],
         const onRequest = (scriptContext) => {
             var request = scriptContext.request;
             var response = scriptContext.response;
-            var form = createBodyForm();//åˆ›å»ºä¸»ä½“ç”»é¢
+            var form = createBodyForm();
             response.writePage(form);
         }
 
+        /**
+         * –{‘Ì‰æ–Ê‚Ìì¬
+         * @returns {Form}
+         */
         function createBodyForm() {
-            var form = ui.createForm({title: "æ¶ˆè²»ç¨ãƒ¬ãƒãƒ¼ãƒˆå‡ºåŠ›"})
-            form.clientScriptModulePath = 'SuiteScripts/OGAWA/ogw_cs_list_of_taxreport.js';
-            form.addButton({id: 'reportExcel', label: "EXCELå‡ºåŠ›", functionName: 'reportExcel'});
-            form.addButton({id: 'clear', label: "ã‚¯ãƒªã‚¢", functionName: 'clearPage'});
-            let  a = form.addField({id: 'custpage_vendor', label: "ä»•å…¥å…ˆ", type: ui.FieldType.SELECT});
-            a.addSelectOption({value:"",text:""});
-          search.create({
+            var form = ui.createForm({title: "Á”ïÅƒŒƒ|[ƒgo—Í"});
+            form.clientScriptModulePath = './ogw_cs_list_of_taxreport.js';
+            form.addButton({id: 'reportExcel', label: "EXCELo—Í", functionName: 'reportExcel'});
+            form.addButton({id: 'clear', label: "ƒNƒŠƒA", functionName: 'clearPage'});
+            var  a = form.addField({id: 'custpage_vendor', label: "d“üæ", type: ui.FieldType.SELECT});
+            a.addSelectOption({value:"",text:""} );
+             search.create({
                 type: "vendor",
                 filters: [["entityid","startswith","31"], "OR", ["entityid","is","10195"]],
-                columns: [search.createColumn({name: "altname", label: "åç§°"})]
+                columns: [search.createColumn({name: "altname"})]
             }).run().each(function(result){
                 a.addSelectOption({value:result.id,text:result.getValue('altname')})
                 return true;
             });
-            form.addField({id: 'custpage_date_from', label: "é–‹å§‹æ—¥", type: ui.FieldType.DATE });
-            form.addField({id: 'custpage_date_to', label: "çµ‚äº†æ—¥", type: ui.FieldType.DATE});
-            a.updateBreakType({breakType: ui.FieldBreakType.STARTCOL});//åˆ—aa
+            form.addField({id: 'custpage_date_from', label: "ŠJn“ú", type: ui.FieldType.DATE });
+            form.addField({id: 'custpage_date_to', label: "I—¹“ú", type: ui.FieldType.DATE});
+            a.updateBreakType({breakType: ui.FieldBreakType.STARTCOL});
             return form;
         }
-
-
-
 
         return {onRequest}
 
