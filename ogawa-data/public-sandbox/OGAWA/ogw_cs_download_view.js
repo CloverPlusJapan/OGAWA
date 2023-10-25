@@ -10,9 +10,9 @@
 
 let formRecord;
 
-define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "../common/common_ogw.js" ], 
+define(['N/currentRecord', 'N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "../common/common_ogw.js" ], 
 
-  function(search, record, runtime, query, format, url, common) {
+  function(currentRecord, search, record, runtime, query, format, url, common) {
 
 	/**
 	 * Function to be executed after page is initialized.
@@ -31,15 +31,15 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
 		
 		formRecord = scriptContext.currentRecord;
 
-		// 顧客フィールドの無効化
-		formRecord.getField({
-			fieldId: 'custpage_body_customer'
-		}).isDisabled = true;
-		
-		// 仕入先フィールドの無効化
-		formRecord.getField({
-			fieldId: 'custpage_body_vendor'
-		}).isDisabled = true;
+//		// 顧客フィールドの無効化
+//		formRecord.getField({
+//			fieldId: 'custpage_body_customer'
+//		}).isDisabled = true;
+//		
+//		// 仕入先フィールドの無効化
+//		formRecord.getField({
+//			fieldId: 'custpage_body_vendor'
+//		}).isDisabled = true;
 
 	}
 	/**
@@ -84,9 +84,17 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
 			if ( output == 'output_po' ) {
 				vendor.isDisabled = false;
 				customer.isDisabled = true;
+				formRecord.setValue({
+					fieldId: 'custpage_body_customer', 
+					value: ''
+				});
 			} else {// 注文書の場合、顧客オプション
 				vendor.isDisabled = true;
 				customer.isDisabled = false;
+				formRecord.setValue({
+					fieldId: 'custpage_body_vendor', 
+					value: ''
+				});
 			}
 		
 		};
@@ -133,7 +141,7 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
 					date_to : dateTo,
 					vendor : vendor,
 					customer : customer,
-					flag : true,
+					flag : 'load',
 			};
 			
 			// URLジャンプ
@@ -147,11 +155,44 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
             window.location.href = returnUrl;
 		
 		};
+	}
+	
+	function pdfDownloadView(output){
+		
+		let deploymentId = '';
+		let fileId = '';
+		
+		// 発注書の場合
+		if ( output == 'output_po' ) {
+			deploymentId = '7389';
+        	fileId = '162892';
+		} else {// 注文書の場合
+			deploymentId = '7390';
+        	fileId = '162893';
+		} 
+		
+		// パラメータ設定
+		let params = {
+				output : output,
+				flag : 'view',
+				deploymentId : deploymentId,
+				fileId : fileId,
+		};
+		
+		// URLジャンプ
+		let returnUrl=  url.resolveScript({
+			scriptId:"customscript_ogw_sl_download_view", 
+			deploymentId:"customdeploy_ogw_sl_download_view", 
+			params:params
+		});
+
+		window.onbeforeunload = null;
+        window.location.href = returnUrl;
 	
 	}
 	
 	function poToPdfSearch(dateFrom, dateTo, vendor){
-		
+
 		// 発注書の検索
 		let filtersArr = [
 		                  ["type","anyof","PurchOrd"], 
@@ -190,14 +231,15 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
         
 		// 取得結果数
 		let searchResultCount = invoiceSearchObj.runPaged().count;
+		
 		if (searchResultCount == 0) {
 			alert('該当データがありません。');
 			return false;	
 		}
 		
 		return true;
-	
-	}
+
+		}
 	
 	function soToPdfSearch(dateFrom, dateTo, customer){
 		
@@ -205,7 +247,7 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
 		let filtersArr = [
 		                  ["type","anyof","SalesOrd"], 
 		                  "AND", 
-		                  ["customform","anyof","244"],
+		                  ["customform","anyof","239"],
 		                  "AND",
 		                  ["mainline","is","T"]
 		                 ];
@@ -275,11 +317,63 @@ define(['N/search', 'N/record', 'N/runtime', 'N/query', "N/format", "N/url", "..
 		
 	}
 	
+	function downloadFile(){
+		
+        var rec = currentRecord.get();
+        let  flag = false;
+        let  count = rec.getLineCount({sublistId:"custpage_sublist"});
+        if (count == 0) alert(" 該当データありません。")
+        for (let i = 0; i < count; i++) {
+            let  check = rec.getSublistValue({sublistId:"custpage_sublist",fieldId:"custpage_sublist_checkbox",line:i});
+            if (check == true){
+                let  url = rec.getSublistValue({sublistId:"custpage_sublist",fieldId:"custpage_sublist_file_url",line:i}).split("_xt=.pdf")[0];
+                url = url +"_xd=T&_xt=.pdf";
+                window.open(url);
+                flag = true;
+            }
+        }
+        if (!flag) alert(" 少なくとも1行を選択してください。");
+    }
+	
+	/**
+     *すべてをマーク
+     */
+    function MarkAll() {
+        var curRec = currentRecord.get();
+        var lineCount = curRec.getLineCount({sublistId: "custpage_sublist"});
+        for (let i = 0; i < lineCount; i++) {
+            curRec.selectLine({sublistId: "custpage_sublist", line: i});
+            let  box = curRec.getSublistValue({sublistId: "custpage_sublist", fieldId: "custpage_sublist_checkbox",line:i});
+            if (!box){
+                curRec.setCurrentSublistValue({sublistId: "custpage_sublist", fieldId: "custpage_sublist_checkbox", value: true});
+            }
+        }
+    }
+
+    /**
+     * すべてのマークを外す
+     */
+    function unmarkAll() {
+        let curRec = currentRecord.get();
+        let sublistLineCount = curRec.getLineCount({sublistId: "custpage_sublist"});
+        for (let i = 0; i < sublistLineCount; i++) {
+            curRec.selectLine({sublistId: "custpage_sublist", line: i});
+            let  box = curRec.getSublistValue({sublistId: "custpage_sublist", fieldId: "custpage_sublist_checkbox",line:i});
+            if (box){
+                curRec.setCurrentSublistValue({sublistId: "custpage_sublist",fieldId: "custpage_sublist_checkbox", value: false});
+            }
+        }
+    }
+	
 	return {
 		pageInit : pageInit,
 		fieldChanged : fieldChanged,
 		pdfDownload : pdfDownload,
-		cancel : cancel
+		cancel : cancel,
+		downloadFile : downloadFile,
+		MarkAll : MarkAll,
+		unmarkAll : unmarkAll,
+		pdfDownloadView : pdfDownloadView
 	};
 	
 });
